@@ -1,0 +1,245 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>FAKTURA KLIJENTU</title>
+<link href="styles.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/JavaScript" src="ajaxstuff.js"></script>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>Badmephisto's Guide to OLL's</title>
+
+<style type="text/css">
+	table {
+		border: 0px;
+		font-family: Arial, Helvetica, sans-serif;
+	}
+	#content td {
+		border: solid 1px #AAAAAA;
+	}
+	hr {
+		color: #003366;
+		background-color: #003366;
+		height: 1px;
+	}
+	#out {
+		color: red;
+		font-weight: bold;
+		font-size: 10px;
+	}
+.style1 {
+	color: #FF0000;
+	font-weight: bold;
+}
+.style2 {
+	color: #FF9797;
+	font-weight: bold;
+}
+.style3 {
+	color: #0000FF;
+	font-weight: bold;
+}
+.style4 {
+	color: #006600;
+	font-weight: bold;
+}
+.style15 {color: #FF00CC;}
+.style17 {color: #FF00CC; font-weight: bold; }
+</style>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td width="37" bgcolor="#D9E7FF">Case</td>
+    <td width="75" bgcolor="#D9E7FF">Diagram</td>
+    <td width="273" bgcolor="#D9E7FF">Algorithm</td>
+    <td width="183" bgcolor="#D9E7FF">Comment</td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td><img src="cases/oll41.gif" width="68" height="68" /></td>
+    <td><strong>F <span class="style1">(R U R' U')</span> F'</strong></td>
+    <td>Simplest OLL of them all </td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td><img src="cases/oll17.gif" width="68" height="68" /></td>
+    <td><strong>F <span class="style1">(R U R' U')  (R U R' U')</span> F'</strong></td>
+    <td>Just repeat the trigger one more time </td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td><img src="cases/oll49.gif" width="68" height="68" /></td>
+    <td><strong>F <span class="style1">(R U R' U')  (R U R' U') (R U R' U')</span> F'<br />
+    y (R' U' R) U' (R' U R) U' (R' U2 R) </strong></td>
+    <td>Just repeat the trigger 3 times. The second one is the one I use, its much faster </td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td><img src="cases/oll38.gif" width="68" height="68" /></td>
+    <td><strong>f <span class="style1">(R U R' U')</span> f' </strong></td>
+    <td>Instead of F F' you now have f and f ' </td>
+  </tr>
+  <tr>
+    <td>5</td>
+    <td><img src="cases/oll11.gif" width="68" height="68" /></td>
+    <td><strong>f<span class="style1"> (R U R' U') (R U R' U')</span> f' </strong></td>
+    <td>Just repeat the RUR'U' trigger 2 times</td>
+  </tr>
+  <tr>
+    <td>6</td>
+    <td><img src="cases/oll39.gif" width="68" height="68" /></td>
+    <td><strong>f ' <span class="style1">(L' U' L U)</span> f </strong></td>
+    <td>This is the reflection of P. You are just doing the algorithm with your left hand. It should be quiet easy to transfer it with just a little bit of practice. <br />
+    I execute it more like f' L' U' L U y' r </td>
+  </tr>
+  <tr>
+    <td>7</td>
+    <td><img src="cases/oll18.gif" width="68" height="68" /></td>
+    <td><strong>F'  <span class="style1">(L' U' L U)</span></strong>  <span class="style1">(L' U' L U)</span><strong> F </strong></td>
+    <td>This is reflection of Case 2. Just do the trigger twice. </td>
+  </tr>
+  <tr>
+    <td>8</td>
+    <td><img src="cases/oll21.gif" width="68" height="68" /></td>
+    <td><strong>[F  <span class="style1">(R U R' U') </span>F'] U [F <span class="style1">(R U R' U')</span> F' ]</strong></td>
+    <td>This is just T, twice, with a U in between. </td>
+  </tr>
+  <tr>
+    <td>9</td>
+    <td><img src="cases/oll22.gif" width="68" height="68" /></td>
+    <td><strong>[F'  <span class="style1">(L' U' L U)</span>  F] y [F  <span class="style1">(R U R' U')</span> F']<br /> 
+    y <span class="style4">(</span><span class="style17">r</span><span class="style4"> U R' U)</span><span class="style3">(R' F R F')</span> R U2 r' </strong></td>
+    <td>Reflection of case 1 followed by case 1, with a y rotation in between, and it comes very natural in that position I find. <br /> Second algorithm was suggested to me and I kinda like it. </td>
+  </tr>
+  <tr>
+    <td>10</td>
+    <td><img src="cases/oll3.gif" width="68" height="68" /></td>
+    <td><strong>[f  <span class="style1">(R U R' U')</span> f'] U [F <span class="style1">(R U R' U')</span> F' ] </strong></td>
+    <td>This is just case4 followed by case 1, with a U in between </td>
+  </tr>
+  <tr>
+    <td>11</td>
+    <td><img src="cases/oll4.gif" width="68" height="68" /></td>
+    <td><strong>[f  <span class="style1">(R U R' U')</span> f'] U' [F<span class="style1"> (R U R' U')</span> F' ] </strong></td>
+    <td>This is case 10 with a U' instead of U </td>
+  </tr>
+  <tr>
+    <td>12</td>
+    <td><img src="cases/oll2.gif" width="68" height="68" /></td>
+    <td><strong> [F<span class="style1"> (R U R' U')</span> F' ] [f<span class="style1"> (R U R' U')</span> f']</strong></td>
+    <td>This is T (case 1) followed by P (case 4)</td>
+  </tr>
+  <tr>
+    <td>13</td>
+    <td><img src="cases/oll50.gif" width="68" height="68" /></td>
+    <td><strong>[f<span class="style1"> (R U R' U')</span> f'] [F <span class="style1">(R U R' U')</span> F']<br />
+    R U2' R2' U' R2 U' R2' U2 R</strong></td>
+    <td>This is just like the above, but T (case1) and P (case 4) are done in reverse order! <br />
+      You should really learn the second algorithm though, its much faster. Its the one everyone fast uses too.</td>
+  </tr>
+  <tr>
+    <td>14</td>
+    <td><img src="cases/oll29.gif" width="68" height="68" /></td>
+    <td><strong>(r U r') <span class="style1">(R U R' U')</span> (r U' r') </strong></td>
+    <td>This algorithm is very easy to remember </td>
+  </tr>
+  <tr>
+    <td>15</td>
+    <td><img src="cases/oll30.gif" width="68" height="68" /></td>
+    <td><strong>(l' U' l) <span class="style1">(L' U' L U)</span> (l' U l) </strong></td>
+    <td>Reflection of case 14</td>
+  </tr>
+  <tr>
+    <td>16</td>
+    <td><img src="cases/oll44.gif" width="68" height="68" /></td>
+    <td><strong>R' [F <span class="style1">(R U R' U')</span> F'] U R </strong></td>
+    <td>Look how neatly case 1 (T) is placed in middle there :) </td>
+  </tr>
+  <tr>
+    <td>17</td>
+    <td><img src="cases/oll57.gif" width="68" height="68" /></td>
+    <td><span class="style1">(R U R' U')</span><strong> M' (U R U' r')</strong></td>
+    <td>I find this one pretty easy to remember too and it flows very nicely. It doesn't come up too often though </td>
+  </tr>
+  <tr>
+    <td>18</td>
+    <td><img src="cases/oll8.gif" width="68" height="68" /></td>
+    <td><strong>M U <span class="style1">(R U R' U')</span> M2 (U R U' r')</strong></td>
+    <td>This almost never comes up, so skip it if you want. But its not too bad. Note the last part is the same as in case 17.</td>
+  </tr>
+  <tr>
+    <td>19</td>
+    <td><img src="cases/oll10.gif" width="68" height="68" /></td>
+    <td><strong>F <span class="style1">(R U R' U')</span> R F' <span class="style1">(</span><span class="style17">r </span><span class="style1">U R' U'</span><span class="style1">)</span> r'</strong></td>
+    <td>The second trigger in brackets is almost the RUR'U' trigger </td>
+  </tr>
+</table>
+<p>Second: Learn another trigger, <span class="style3">(R' F R F')</span></p>
+<table width="100%">
+  <tr>
+    <td width="32" bgcolor="#D9E7FF">Case</td>
+    <td width="71" bgcolor="#D9E7FF">Diagram</td>
+    <td width="224" bgcolor="#D9E7FF">Algorithm</td>
+    <td width="461" bgcolor="#D9E7FF">Comment</td>
+  </tr>
+  <tr>
+    <td>20</td>
+    <td><img src="cases/oll42.gif" width="68" height="68" /></td>
+    <td><span class="style1">(R U R' U')</span> <span class="style3">(R' F R F')</span> </td>
+    <td>Just the two triggers is all it takes :) </td>
+  </tr>
+  <tr>
+    <td>21</td>
+    <td><img src="cases/oll52.gif" width="68" height="68" /></td>
+    <td><span class="style1">(</span><span class="style17">r</span><span class="style1"> U R' U')</span> <span class="style3">(</span><span class="style17">r'</span><span class="style3"> F R F')</span> </td>
+    <td>Same as T2 (case 20) but the first R's are actually double layer R turn (r) </td>
+  </tr>
+  <tr>
+    <td>22</td>
+    <td><img src="cases/oll53.gif" width="68" height="68" /></td>
+    <td><strong>F' <span class="style1">(</span><span class="style17">r</span><span class="style1"> U R' U')</span> (r' F R ) </strong></td>
+    <td>Same as chameleon (case21) , with the last F' moved to the front! </td>
+  </tr>
+  <tr>
+    <td>23</td>
+    <td><img src="cases/oll46.gif" width="68" height="68" /></td>
+    <td><strong>R' U' <span class="style3">(R' F R F')</span> U R</strong></td>
+    <td>There are some setup moves involved here. Note how U R &quot;undoes&quot; the R' U' you do in beginning</td>
+  </tr>
+  <tr>
+    <td>24</td>
+    <td><img src="cases/oll1.gif" width="68" height="68" /></td>
+    <td><strong>(R U2 R') <span class="style3">(R' F R F')</span> U2 <span class="style3">(R' F R F')</span></strong> </td>
+    <td>The R' R' is obviously made as a giant R2 in the actual execution </td>
+  </tr>
+  <tr>
+    <td>25</td>
+    <td><img src="cases/oll40.gif" width="68" height="68" /></td>
+    <td><strong>(R U2 R') <span class="style3">(R' F R F')</span> (R U2 R') </strong></td>
+    <td>Incredibly easy to remember, and fast to execute. Again, the R' R' is made as a big R2. Note first part is the same as in case 24</td>
+  </tr>
+  <tr>
+    <td>26</td>
+    <td><img src="cases/oll7.gif" width="68" height="68" /></td>
+    <td><strong>M U <span class="style1">(R U R' U')</span> M' <span class="style3">(R' F R F')</span></strong> <strong><br />
+    </strong></td>
+    <td>pretty easy to remember. Also note how similar this algorithm is to case 17 </td>
+  </tr>
+  <tr>
+    <td>27</td>
+    <td><img src="cases/oll15.gif" width="68" height="68" /></td>
+    <td><span class="style3"><strong>(R' F <span class="style17">R'</span> F')</strong></span><strong> R2 U2 y <span class="style3">(R' F R F')</span></strong></td>
+    <td>Be warned that the first trigger is not really R'FRF' trigger. But almost... the second R turn in it is R', not R </td>
+  </tr>
+</table>
+
+
+
+
+</script>
+</body>
+</html>
