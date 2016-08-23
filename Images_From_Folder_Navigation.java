@@ -1,4 +1,3 @@
- 
 import java.awt.Image;
 import java.io.File;
 import javax.swing.ImageIcon;
@@ -6,6 +5,9 @@ import java.io.*;
 import javax.swing.*;
 import java.util.Date;
 import java.awt.Color;
+import java.text.DecimalFormat;
+import java.math.BigDecimal;
+import java.sql.*;
 //import javax.swing.*;
 
 /**
@@ -50,11 +52,14 @@ public class Images_From_Folder_Navigation extends javax.swing.JFrame {
         System.out.println(imageName);
 
         String fajl  = "C:\\Users\\User\\Desktop\\milan\\Katalog-master\\barcode\\" + imageName.substring(0, imageName.length() - 4 ) + ".txt";
-        System.out.println(fajl);
+        String db_sifra = imageName.substring(7, (imageName.length() - 4 ));
+        
+        
+        System.out.println(db_sifra);
 
         // This will reference one line at a time
         String line = null;
-        
+       /**
 
         try {
             // FileReader reads text files in the default encoding.
@@ -65,10 +70,7 @@ public class Images_From_Folder_Navigation extends javax.swing.JFrame {
             BufferedReader bufferedReader = 
                 new BufferedReader(fileReader);
 
-           /* while((line = bufferedReader.readLine()) != null) {
-                //System.out.println(line);
-                line += bufferedReader.readLine();
-            }   */
+        
             line = bufferedReader.readLine();
             System.out.println(line);
             String parts[] = line.split(" ");
@@ -114,7 +116,98 @@ public class Images_From_Folder_Navigation extends javax.swing.JFrame {
                 + imageName.substring(0, imageName.length() - 4 ) + "'");                  
             
         }
+    **/
+        
+    Connection c = null;
+    Statement stmt = null;
     
+    try {
+      Class.forName("org.sqlite.JDBC");
+      c = DriverManager.getConnection("jdbc:sqlite:KATALOG.db");
+      c.setAutoCommit(false);
+      
+      
+      System.out.println("Opened database successfully");
+
+      stmt = c.createStatement();
+      
+      if (db_sifra.charAt(0)  == '0') {
+        System.out.println("Prvi char je s");
+        System.out.println(db_sifra.substring(0, db_sifra.length()));
+         ResultSet rs = stmt.executeQuery( "SELECT * FROM KATALOG where sifra ='s" + db_sifra + "';" );
+         
+        
+        
+        String sifra = rs.getString("SIFRA");
+        String naziv = rs.getString("NAZIV");
+        float cijena = rs.getFloat("CIJENA");
+        int zaliha = rs.getInt("ZALIHA");
+          
+        System.out.println(sifra + " " + naziv + " "+ cijena + " "+ zaliha);
+      
+        
+      rs.close();
+      stmt.close();
+      c.close();
+      
+            jLabel_Sifra_sifra.setText(sifra);
+            jLabel_Cijena_cijena.setText(String.valueOf(cijena));
+            jLabel_Naziv_naziv.setText(naziv);
+            
+            jLabel_trenutna_zaliha.setOpaque(true);
+            
+      if (zaliha > 100) {
+                        jLabel_trenutna_zaliha.setText(String.valueOf(zaliha));
+                        jLabel_trenutna_zaliha.setForeground(java.awt.Color.red);
+                        jLabel_trenutna_zaliha.setBackground(new java.awt.Color(70,230,76));
+                        
+                 }
+            else {
+                
+                jLabel_trenutna_zaliha.setText(String.valueOf(zaliha));
+                jLabel_trenutna_zaliha.setForeground(java.awt.Color.green);
+                jLabel_trenutna_zaliha.setBackground(new java.awt.Color(255,0,0));
+            }            
+    }
+        
+      ResultSet rs = stmt.executeQuery( "SELECT * FROM KATALOG where sifra = '" + db_sifra + "';" );
+      
+      String sifra = rs.getString("SIFRA");
+      String naziv = rs.getString("NAZIV");
+      float cijena = rs.getFloat("CIJENA");
+      int zaliha = rs.getInt("ZALIHA");
+      
+      System.out.println(sifra + " " + naziv + " "+ cijena + " "+ zaliha);
+      
+      rs.close();
+      stmt.close();
+      c.close();
+      
+            jLabel_Sifra_sifra.setText(sifra);
+            jLabel_Cijena_cijena.setText(String.valueOf(cijena));
+            jLabel_Naziv_naziv.setText(naziv);
+            
+            jLabel_trenutna_zaliha.setOpaque(true);
+            
+      if (zaliha > 100) {
+                        jLabel_trenutna_zaliha.setText(String.valueOf(zaliha));
+                        jLabel_trenutna_zaliha.setForeground(java.awt.Color.red);
+                        jLabel_trenutna_zaliha.setBackground(new java.awt.Color(70,230,76));
+                        
+                       }
+      else       {
+                
+                jLabel_trenutna_zaliha.setText(String.valueOf(zaliha));
+                jLabel_trenutna_zaliha.setForeground(java.awt.Color.green);
+                jLabel_trenutna_zaliha.setBackground(new java.awt.Color(255,0,0));
+                       }      
+    
+    } catch ( Exception e ) 
+    {
+      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+      System.err.println(db_sifra);
+      System.exit(0);
+    }
         
     }
     
@@ -345,6 +438,7 @@ public class Images_From_Folder_Navigation extends javax.swing.JFrame {
             
             BufferedWriter output = null;
             Date date = new Date();
+            String t_date = date.toString();
             File file = new File("Faktura.html");
             output = new BufferedWriter(new FileWriter(file, true));
             
@@ -357,25 +451,35 @@ public class Images_From_Folder_Navigation extends javax.swing.JFrame {
             naziv = jLabel_Naziv_naziv.getText();
             komada = dodaj_u_fakturu.getText();
             
+            float cijena_float = Float.valueOf(cijena);
+            float komada_float = Float.valueOf(komada);
+            
+            float ukupno = cijena_float * komada_float;
+            
             output.write("  <table width=\"100%\">\r\n " +
                               "<tr>\r\n" +
-                                "<td width=\"37\" bgcolor=\"#D9E7FF\">Rb.</td>\r\n"      +
-                                "<td width=\"75\" bgcolor=\"#D9E7FF\">Slika</td>\r\n"    +
-                                "<td width=\"273\" bgcolor=\"#D9E7FF\">Naziv</td>\r\n"   +
-                                "<td width=\"120\" bgcolor=\"#D9E7FF\">Kolicina</td>\r\n"+
-                                "<td width=\"120\" bgcolor=\"#D9E7FF\">Cijena</td>\r\n"  + 
+                                "<td width=\"5\" bgcolor=\"#D9E7FF\">Rb.</td>\r\n"      +
+                                "<td width=\"15\" bgcolor=\"#D9E7FF\">Slika</td>\r\n"    +
+                                "<td width=\"50\" bgcolor=\"#D9E7FF\">Naziv</td>\r\n"   +
+                                "<td width=\"10\" bgcolor=\"#D9E7FF\">Kolicina</td>\r\n"+
+                                "<td width=\"10\" bgcolor=\"#D9E7FF\">Cijena</td>\r\n"  + 
+                                "<td width=\"10\" bgcolor=\"#D9E7FF\">UKUPNO</td>\r\n" +
+                                
                                 
                               "</tr>\r\n");
             
             output.write("   <tr>\r\n" +
                                 "<td>" + counter + "</td>\r\n" +
-                                "<td><img src=\"slike/" + sifra + ".jpg\" " + "width=\"68\" " +" \"height=\"68\" "+  "/></td> \r\n" +
-                                "<td><strong>F <span class=\"style1\">" + naziv + "</span> F\'</strong></td>\r\n" +
+                                "<td><img src=\"C:\\Users\\User\\Desktop\\milan\\Katalog-master\\slike2/" + sifra + ".jpg\" " + "width=\"150\" " +" \"height=\"150\" "+  "/></td> \r\n" +
+                                "<td><strong> <span class=\"style1\">" + naziv + "</span>\'</strong></td>\r\n" +
                                 "<td>" + komada + " </td>\r\n" +
                                 "<td>" + cijena + "</td>\r\n" +
+                                "<td>" + round3(ukupno,2) + "</td>\r\n" +
                               "</tr>\r\n");
             //output.write(sifra  + " " + naziv + " " + komada + " " +  cijena + "\r\n");
+            counter += 1;
             System.out.println(cijena + " " + naziv + " " + sifra );
+            System.out.println(t_date);
             output.close();
             
             
@@ -389,7 +493,10 @@ public class Images_From_Folder_Navigation extends javax.swing.JFrame {
         
         
     }
-     
+    
+    public static float round3(float d, int decimalPlace) {
+    return BigDecimal.valueOf(d).setScale(decimalPlace, BigDecimal.ROUND_HALF_UP).floatValue();
+} 
      
     private void jButton_Trazi_akcijaTrazi(java.awt.event.ActionEvent event) {
         try {
@@ -397,12 +504,12 @@ public class Images_From_Folder_Navigation extends javax.swing.JFrame {
         String sifra_za_trazenje = trazi_sifru.getText();
         System.out.println(sifra_za_trazenje);
         
-        ImageIcon icon = new ImageIcon("C:\\Users\\User\\Desktop\\milan\\Katalog-master\\slike\\" + sifra_za_trazenje + ".jpg");
+        ImageIcon icon = new ImageIcon("C:\\Users\\User\\Desktop\\milan\\Katalog-master\\slike2\\" + sifra_za_trazenje + ".jpg");
         Image image = icon.getImage().getScaledInstance(jLabel_Image.getWidth(), jLabel_Image.getHeight(), Image.SCALE_SMOOTH);
         jLabel_Image.setIcon(new ImageIcon(image));
         
         //String fajl  = "/home/rnd/Documents/slike/" + sifra_za_trazenje.substring(0, sifra_za_trazenje.length() - 4 ) + ".txt";
-        
+        /**
         String fajl  = "C:\\Users\\User\\Desktop\\milan\\Katalog-master\\barcode\\" + sifra_za_trazenje + ".txt";
         System.out.println(fajl);
 
@@ -430,7 +537,97 @@ public class Images_From_Folder_Navigation extends javax.swing.JFrame {
             
             bufferedReader.close();         
         
+        **/
+    Connection c = null;
+    Statement stmt = null;
+    
+    try {
+      Class.forName("org.sqlite.JDBC");
+      c = DriverManager.getConnection("jdbc:sqlite:KATALOG.db");
+      c.setAutoCommit(false);
+      
+      
+      System.out.println("Opened database successfully");
+
+      stmt = c.createStatement();
+      
+      if (sifra_za_trazenje.charAt(0) == '0') {
+        System.out.println("Prvi char je 0");
         
+         ResultSet rs = stmt.executeQuery( "SELECT * FROM KATALOG where sifra = '" + sifra_za_trazenje + "';" );
+         
+        System.out.println(sifra_za_trazenje.substring(1, sifra_za_trazenje.length()));
+        
+        String sifra = rs.getString("SIFRA");
+        String naziv = rs.getString("NAZIV");
+        float cijena = rs.getFloat("CIJENA");
+        int zaliha = rs.getInt("ZALIHA");
+          
+        System.out.println(sifra + " " + naziv + " "+ cijena + " "+ zaliha);
+      
+        
+      rs.close();
+      stmt.close();
+      c.close();
+      
+            jLabel_Sifra_sifra.setText(sifra);
+            jLabel_Cijena_cijena.setText(String.valueOf(cijena));
+            jLabel_Naziv_naziv.setText(naziv);
+            
+            jLabel_trenutna_zaliha.setOpaque(true);
+            
+      if (zaliha > 100) {
+                        jLabel_trenutna_zaliha.setText(String.valueOf(zaliha));
+                        jLabel_trenutna_zaliha.setForeground(java.awt.Color.red);
+                        jLabel_trenutna_zaliha.setBackground(new java.awt.Color(70,230,76));
+                        
+                 }
+            else {
+                
+                jLabel_trenutna_zaliha.setText(String.valueOf(zaliha));
+                jLabel_trenutna_zaliha.setForeground(java.awt.Color.green);
+                jLabel_trenutna_zaliha.setBackground(new java.awt.Color(255,0,0));
+            }            
+    }
+        
+      ResultSet rs = stmt.executeQuery( "SELECT * FROM KATALOG where sifra = '" + sifra_za_trazenje + "';" );
+      
+      String sifra = rs.getString("SIFRA");
+      String naziv = rs.getString("NAZIV");
+      float cijena = rs.getFloat("CIJENA");
+      int zaliha = rs.getInt("ZALIHA");
+      
+      System.out.println(sifra + " " + naziv + " "+ cijena + " "+ zaliha);
+      
+      rs.close();
+      stmt.close();
+      c.close();
+      
+            jLabel_Sifra_sifra.setText(sifra);
+            jLabel_Cijena_cijena.setText(String.valueOf(cijena));
+            jLabel_Naziv_naziv.setText(naziv);
+            
+            jLabel_trenutna_zaliha.setOpaque(true);
+            
+      if (zaliha > 100) {
+                        jLabel_trenutna_zaliha.setText(String.valueOf(zaliha));
+                        jLabel_trenutna_zaliha.setForeground(java.awt.Color.red);
+                        jLabel_trenutna_zaliha.setBackground(new java.awt.Color(70,230,76));
+                        
+                 }
+            else {
+                
+                jLabel_trenutna_zaliha.setText(String.valueOf(zaliha));
+                jLabel_trenutna_zaliha.setForeground(java.awt.Color.green);
+                jLabel_trenutna_zaliha.setBackground(new java.awt.Color(255,0,0));
+            }      
+    
+    } catch ( Exception e ) 
+    {
+      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+      System.err.println(sifra_za_trazenje);
+      System.exit(0);
+    }
         
         
     } catch (Exception b)  { 
